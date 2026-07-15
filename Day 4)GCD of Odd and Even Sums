@@ -1,0 +1,11 @@
+class Solution:
+    def gcdOfOddEvenSums(self, n: int) -> int:
+        even=0
+        odd=0
+        for i in range(0,n*2+1):
+            if i%2==0:
+                even=even+i
+            else:
+                odd=odd+i
+        a=math.gcd(odd,even)
+        return a        
