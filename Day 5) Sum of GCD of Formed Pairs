@@ -1,0 +1,16 @@
+import math
+
+class Solution:
+    def gcdSum(self, nums: list[int]) -> int:
+        prefixGcd = []
+        mx = 0
+  
+        for num in nums:
+            mx = max(mx, num)
+            prefixGcd.append(math.gcd(num, mx))
+    
+        prefixGcd.sort()
+
+        ans = 0
+        left = 0
+        right = len(prefixGcd) - 1
