@@ -1,0 +1,15 @@
+from collections import Counter
+class Solution:
+    def equalFrequency(self, word: str) -> bool:
+        freq = Counter(word)
+        for i in range(len(word))
+            ch = word[i]
+            freq[ch] -= 1
+            if freq[ch] == 0:
+                del freq[ch]
+            values = list(freq.values())
+            if len(set(values)) == 1:
+                return True
+            freq[ch] = freq.get(ch, 0) + 1
+
+        return False
