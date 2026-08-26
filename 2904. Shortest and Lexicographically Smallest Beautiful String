@@ -1,0 +1,25 @@
+class Solution:
+    def shortestBeautifulSubstring(self, s: str, k: int) -> str:
+        ones = []
+
+        for i in range(len(s)):
+            if s[i] == '1':
+                ones.append(i)
+
+        if len(ones) < k:
+            return ""
+
+        best = ""
+
+        for i in range(len(ones) - k + 1):
+            start = ones[i]
+            end = ones[i + k - 1]
+
+            cur = s[start:end + 1]
+
+            if best == "" or len(cur) < len(best):
+                best = cur
+            elif len(cur) == len(best):
+                best = min(best, cur)
+
+        return best
