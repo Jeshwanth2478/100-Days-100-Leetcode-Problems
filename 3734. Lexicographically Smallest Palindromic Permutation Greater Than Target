@@ -1,0 +1,96 @@
+class Solution:
+    def lexPalindromicPermutation(self, s: str, target: str) -> str:
+
+        n = len(s)
+
+
+        count = [0] * 26
+
+        for ch in s:
+            count[ord(ch) - ord('a')] += 1
+
+        if sum(c % 2 for c in count) > 1:
+            return ""
+
+
+        middle = ""
+
+        if n % 2 == 1:
+            for i in range(26):
+                if count[i] % 2 == 1:
+                    middle = chr(i + ord('a'))
+                    break
+
+
+        half_count = [c // 2 for c in count]
+
+        half_len = n // 2
+
+        def make_palindrome(left):
+            left = ''.join(left)
+            return left + middle + left[::-1]
+
+ 
+        remaining = half_count[:]
+        left = []
+        possible = True
+
+        for ch in target[:half_len]:
+            idx = ord(ch) - ord('a')
+
+            if remaining[idx] == 0:
+                possible = False
+                break
+
+            remaining[idx] -= 1
+            left.append(ch)
+
+        if possible:
+            candidate = make_palindrome(left)
+
+
+            if candidate > target:
+                return candidate
+
+
+        for i in range(half_len - 1, -1, -1):
+
+            remaining = half_count[:]
+
+            prefix = list(target[:i])
+
+            possible = True
+
+            for ch in prefix:
+                idx = ord(ch) - ord('a')
+
+                if remaining[idx] == 0:
+                    possible = False
+                    break
+
+                remaining[idx] -= 1
+
+            if not possible:
+                continue
+
+
+            target_idx = ord(target[i]) - ord('a')
+
+            for c in range(target_idx + 1, 26):
+
+                if remaining[c] > 0:
+
+                    remaining[c] -= 1
+
+                    left = prefix + [chr(c + ord('a'))]
+
+
+                    for k in range(26):
+                        left.extend(
+                            [chr(k + ord('a'))] * remaining[k]
+                        )
+
+                    return make_palindrome(left)
+
+   
+        return ""
